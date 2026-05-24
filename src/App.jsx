@@ -125,43 +125,32 @@ const cellCenters = [
 
 function HandDrawnX({ x, y, variant = 0 }) {
   const rotations = [-4, 3, -2, 4, -3];
-const scales = [0.64, 0.62, 0.66, 0.63, 0.65];
+  const scales = [0.82, 0.8, 0.84, 0.81, 0.83];
+
   const rotation = rotations[variant % rotations.length];
   const scale = scales[variant % scales.length];
 
   return (
     <g
       transform={`translate(${x}, ${y}) rotate(${rotation}) scale(${scale})`}
-      className="fatMarkerX"
+      className="handX"
     >
-      {/* diagonal 1 as a thick filled marker shape */}
       <path
         d="
-          M-26 -20
-          C-24 -24, -20 -26, -16 -23
-          C-7 -15, 2 -6, 11 3
-          C18 10, 24 16, 29 22
-          C31 25, 29 29, 25 31
-          C21 32, 18 30, 15 27
-          C8 18, -1 9, -10 0
-          C-17 -7, -23 -13, -26 -20
-          Z
+          M-24 -24
+          C-15 -15, -8 -8, 0 0
+          C8 8, 15 16, 24 25
         "
+        className="markerStrokeX"
       />
 
-      {/* diagonal 2 as a thick filled marker shape */}
       <path
         d="
-          M24 -24
-          C28 -22, 30 -18, 27 -14
-          C19 -5, 10 4, 2 12
-          C-5 19, -12 26, -19 31
-          C-23 34, -28 32, -30 28
-          C-31 24, -29 21, -26 18
-          C-17 10, -8 1, 1 -8
-          C8 -15, 15 -22, 24 -24
-          Z
+          M25 -24
+          C16 -15, 8 -7, 0 1
+          C-8 9, -16 17, -25 25
         "
+        className="markerStrokeX"
       />
     </g>
   );

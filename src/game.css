@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+
+body {
+  margin: 0;
+  background: #f7f7f4;
+  font-family: 'Schoolbell', cursive;
+}
+
+/* ── Mode Select ── */
+.modeSelect {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.gameTitle {
+  font-family: 'Schoolbell', cursive;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #050505;
+  margin: 0 0 12px;
+}
+
+.modeBtn {
+  font-family: 'Schoolbell', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #050505;
+  background: transparent;
+  border: 3px solid #050505;
+  padding: 12px 36px;
+  cursor: pointer;
+  border-radius: 2px;
+  /* rough hand-drawn feel */
+  box-shadow: 3px 3px 0 #050505;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.modeBtn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #050505;
+}
+
+.modeBtn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #050505;
+}
+
+/* ── Game Screen ── */
+.gameScreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* ── Turn Indicator ── */
+.turnIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.turnSymbol {
+  font-family: 'Schoolbell', cursive;
+  font-size: 36px;
+  font-weight: 900;
+  color: #050505;
+  line-height: 1;
+}
+
+.turnSub {
+  font-family: 'Schoolbell', cursive;
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+}
+
+/* ── Game Area ── */
+.gameArea {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── Player Card ── */
+.playerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 90px;
+  padding: 12px 8px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.playerCard.active {
+  border-color: #050505;
+  transform: rotate(-1deg) scale(1.04);
+  box-shadow: 2px 2px 0 #050505;
+}
+
+.playerAvatar {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.playerSymbol {
+  font-size: 14px;
+  font-weight: 900;
+  color: #050505;
+}
+
+.playerName {
+  font-family: 'Schoolbell', cursive;
+  font-size: 12px;
+  font-weight: 700;
+  color: #050505;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ── Board ── */
+.board {
+  width: 360px;
+  height: 360px;
+}
+
+.gridLine {
+  fill: none;
+  stroke: #050505;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#roughen);
+}
+
+.cellSymbol {
+  font-family: 'Schoolbell', cursive;
+  font-size: 48px;
+  fill: #050505;
+}
+
+.cellHitbox {
+  cursor: pointer;
+}
+
+.strikeLine {
+  stroke: #e03030;
+  stroke-width: 6;
+  stroke-linecap: round;
+  filter: url(#roughen);
+}
