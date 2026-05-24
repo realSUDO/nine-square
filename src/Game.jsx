@@ -4,6 +4,7 @@ import "./game.css";
 import Board from "./components/Board.jsx";
 import FriendsFlow from "./components/FriendsFlow.jsx";
 import { checkWinner } from "./utils/winner.js";
+import { sfx } from "./utils/sfx.js";
 import confetti from "canvas-confetti";
 
 let socket = null;
@@ -13,7 +14,10 @@ function getSocket() {
 }
 
 export default function App() {
-  const [mode, setMode] = useState(null);
+  const [mode, setMode] = useState(() => {
+    // if URL has ?room=, go straight to online flow
+    return new URLSearchParams(window.location.search).get("room") ? "friends" : null;
+  });
   const [cells, setCells] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState("X");
   const [dark, setDark] = useState(false);
@@ -99,7 +103,21 @@ export default function App() {
     history.replaceState(null, "");
   }
 
-  // push a history entry when entering a mode so browser back works
+  // sound effects
+  const prevIsOver = useRef(false);
+  useEffect(() => {
+    if (isOver && !prevIsOver.current) {
+      prevIsOver.current = true;
+      if (isTie) {
+        sfx.tie();
+      } else if (isFriends && mySymbol) {
+        winner === mySymbol ? sfx.win() : sfx.lose();
+      } else {
+        sfx.win();
+      }
+    }
+    if (!isOver) prevIsOver.current = false;
+  }, [isOver, isTie, winner, isFriends, mySymbol]);
   useEffect(() => {
     if (mode) {
       history.pushState({ mode }, "");
@@ -160,6 +178,7 @@ export default function App() {
 
   function handleCellClick(index) {
     if (cells[index] || winLine || !myTurn) return;
+    sfx.click();
     const newCells = [...cells];
     newCells[index] = turn;
     setCells(newCells);
@@ -224,7 +243,7 @@ function TurnIndicator({ turn, winner, isTie, p1Name, p2Name, mySymbol }) {
   if (isTie) return <div className="turnIndicator"><span className="turnSub">It's a tie!</span></div>;
   if (winner) {
     if (mySymbol) {
-      const msg = winner === mySymbol ? "You win! 🎉" : "You lose!";
+      const msg = winner === mySymbol ? "You win!" : "You lose!";
       return <div className="turnIndicator"><span className="turnSub">{msg}</span></div>;
     }
     const name = winner === "X" ? p1Name : p2Name;

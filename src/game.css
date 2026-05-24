@@ -273,6 +273,81 @@ body {
 
 .fieldError { font-size: 14px; color: #e03030; margin: 0; }
 
+.copyBtn {
+  background: none;
+  border: 2px solid var(--fg);
+  color: var(--fg);
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.1s;
+}
+.copyBtn:hover { background: var(--card-bg); }
+
+.shareRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shareLinkBtn {
+  font-family: 'Schoolbell', cursive;
+  font-size: 15px;
+  color: var(--muted);
+  background: none;
+  border: 2px dashed var(--divider);
+  border-radius: 4px;
+  padding: 8px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.shareLinkBtn:hover { border-color: var(--fg); color: var(--fg); }
+
+/* ── Wait card ── */
+.waitCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  border: 3px solid var(--fg);
+  border-radius: 6px;
+  padding: 28px 36px;
+  box-shadow: 5px 5px 0 var(--fg);
+  background: var(--card-bg);
+  min-width: 260px;
+}
+
+.waitLabel {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.codeRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.codeDivider {
+  width: 100%;
+  height: 1px;
+  background: var(--divider);
+}
+
+.waitingText {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0;
+}
+
 /* ── Game footer ── */
 .gameFooter {
   display: flex;
