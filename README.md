@@ -1,16 +1,83 @@
-# React + Vite
+# Nine Square
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hand-drawn-style Tic-Tac-Toe game built with React + Vite. Play locally with a friend on the same device, or challenge someone online via a shareable room code.
 
-Currently, two official plugins are available:
+### Live link : https://ns.sudohq.me
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Local multiplayer** — two players on the same screen
+- **Online multiplayer** — create a room, share the code or link, play in real-time via WebSockets
+- **Hand-drawn aesthetic** — SVG board with sketch-like grid lines and symbols
+- **Sound effects** — click, win, lose, and tie audio cues
+- **Dark mode** — toggle between light and dark themes
+- **Win animation** — confetti burst on the winner's player card
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer    | Tech                          |
+|----------|-------------------------------|
+| Frontend | React 19, Vite                |
+| Realtime | Socket.IO (client + server)   |
+| Backend  | Node.js, Express              |
+| Styling  | Plain CSS                     |
 
-## Expanding the ESLint configuration
+## Folder Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+nine-square/
+├── public/
+│   ├── click.mp3 / win.mp3 / lost.mp3 / tye.mp3   # sound effects
+│   └── user-base.png / user-base-dark.png           # player avatars
+├── src/
+│   ├── components/
+│   │   ├── Board.jsx          # SVG game board with win-strike animation
+│   │   └── FriendsFlow.jsx    # Online lobby UI (create/join room)
+│   ├── utils/
+│   │   ├── winner.js          # Win-condition checker
+│   │   └── sfx.js             # Sound effect helpers
+│   ├── Game.jsx               # Main game logic & state (active entry point)
+│   ├── App.jsx                # Standalone local-only prototype (unused)
+│   ├── game.css               # All styles
+│   └── main.jsx               # React entry point
+├── server.js                  # Socket.IO + Express server (online mode)
+├── vite.config.js
+└── package.json
+```
+
+> `Game.jsx` is the real app. `App.jsx` is an earlier local-only prototype.
+
+## Getting Started
+
+**Install dependencies**
+```bash
+npm install
+```
+
+**Run frontend only (local multiplayer)**
+```bash
+npm run dev
+```
+
+**Run with online multiplayer**
+
+Start the backend server in one terminal:
+```bash
+node server.js
+```
+Then start Vite in another:
+```bash
+npm run dev
+```
+
+**Build for production**
+```bash
+npm run build
+node server.js   # serves the built client from /dist
+```
+
+## Online Multiplayer Flow
+
+1. One player clicks **Online Multiplayer → Create Room** and shares the room code or invite link.
+2. The other player enters the code (or opens the link) and clicks **Join Room**.
+3. The game starts automatically once both players are in.
+4. Both players must agree to start the next round — each clicks **Next Round**.
