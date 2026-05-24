@@ -1,9 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
 
+:root {
+  --bg: #f7f7f4;
+  --fg: #050505;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0,0,0,0.06);
+  --muted: #888;
+  --divider: #ccc;
+  --input-shadow: #050505;
+  --strike: #e03030;
+}
+
+body.dark {
+  --bg: #252525;
+  --fg: #f0f0ee;
+  --card-bg: #303030;
+  --card-shadow: rgba(0,0,0,0.5);
+  --muted: #999;
+  --divider: #555;
+  --input-shadow: #f0f0ee;
+  --strike: #ffff00;
+}
+
 body {
   margin: 0;
-  background: #f7f7f4;
+  background: var(--bg);
+  color: var(--fg);
   font-family: 'Schoolbell', cursive;
+  padding: 0 16px;
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ── Theme toggle ── */
+.themeToggle {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  background: var(--card-bg);
+  border: 2px solid var(--fg);
+  color: var(--fg);
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 2px 2px 0 var(--fg);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  line-height: 1;
+}
+
+.themeToggle:hover {
+  box-shadow: 3px 3px 0 var(--fg);
+  transform: translate(-1px, -1px);
 }
 
 /* ── Mode Select ── */
@@ -19,7 +72,7 @@ body {
 .gameTitle {
   font-size: 42px;
   letter-spacing: 3px;
-  color: #050505;
+  color: var(--fg);
   margin: 0 0 16px;
 }
 
@@ -27,28 +80,25 @@ body {
   font-family: 'Schoolbell', cursive;
   font-size: 18px;
   letter-spacing: 1px;
-  color: #050505;
-  background: #f7f7f4;
-  border: 3px solid #050505;
+  color: var(--fg);
+  background: var(--bg);
+  border: 3px solid var(--fg);
   padding: 12px 40px;
   cursor: pointer;
   border-radius: 2px;
-  /* popped out at idle */
-  box-shadow: 5px 5px 0 #050505;
+  box-shadow: 5px 5px 0 var(--fg);
   transform: translate(-2px, -2px);
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .modeBtn:hover {
-  /* more pressed on hover */
   transform: translate(0px, 0px);
-  box-shadow: 3px 3px 0 #050505;
+  box-shadow: 3px 3px 0 var(--fg);
 }
 
 .modeBtn:active {
-  /* fully pressed on click */
   transform: translate(3px, 3px);
-  box-shadow: 0px 0px 0 #050505;
+  box-shadow: 0px 0px 0 var(--fg);
 }
 
 /* ── Game Screen ── */
@@ -69,7 +119,7 @@ body {
 
 .turnSub {
   font-size: 26px;
-  color: #050505;
+  color: var(--fg);
   letter-spacing: 1px;
 }
 
@@ -89,16 +139,17 @@ body {
   width: 100px;
   padding: 12px 8px 14px;
   border-radius: 6px;
-  background: #fff;
+  background: var(--card-bg);
   border: 2px solid transparent;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 2px 2px 0 var(--card-shadow);
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+  will-change: transform;
+  flex-shrink: 0;
 }
 
 .playerCard.active {
-  border-color: #050505;
+  border: 2.5px dashed var(--fg);
   transform: rotate(-1deg) scale(1.05);
-  box-shadow: 3px 3px 0 #050505;
 }
 
 .playerAvatar {
@@ -110,26 +161,27 @@ body {
 .playerSymbol {
   font-size: 13px;
   font-weight: 900;
-  color: #050505;
+  color: var(--fg);
 }
 
 .playerName {
   font-size: 13px;
-  color: #050505;
+  color: var(--fg);
   text-align: center;
   letter-spacing: 0.3px;
 }
 
 /* ── Board ── */
 .board {
-  width: 340px;
-  height: 340px;
+  width: min(340px, 100%);
+  height: min(340px, 100vw);
   filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.08));
+  flex-shrink: 0;
 }
 
 .gridLine {
   fill: none;
-  stroke: #050505;
+  stroke: var(--fg);
   stroke-width: 9;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -139,40 +191,168 @@ body {
 .cellSymbol {
   font-family: 'Schoolbell', cursive;
   font-size: 48px;
-  fill: #050505;
+  fill: var(--fg);
 }
 
-.cellHitbox {
-  cursor: pointer;
+.cellHitbox { cursor: pointer; }
+
+/* ── Card slot ── */
+.cardSlot {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
+
+/* ── Friends Input ── */
+.friendInput {
+  font-family: 'Schoolbell', cursive;
+  font-size: 18px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 3px solid var(--fg);
+  padding: 10px 16px;
+  border-radius: 2px;
+  outline: none;
+  box-shadow: 3px 3px 0 var(--input-shadow);
+  width: 220px;
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.joinRow { display: flex; gap: 10px; align-items: center; }
+.joinCode { width: 100px; text-align: center; letter-spacing: 4px; }
+
+.roomCode {
+  font-family: 'Schoolbell', cursive;
+  font-size: 38px;
+  letter-spacing: 8px;
+  color: var(--fg);
+  margin: 0;
+  border: 3px solid var(--fg);
+  padding: 8px 24px;
+  box-shadow: 4px 4px 0 var(--fg);
+}
+
+/* ── Online form ── */
+.onlineForm {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  align-self: flex-start;
+  margin-left: calc(50% - 110px);
+}
+
+.formDivider {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+.formDivider::before,
+.formDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--divider);
+}
+
+.fieldError { font-size: 14px; color: #e03030; margin: 0; }
+
+/* ── Game footer ── */
+.gameFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 80px;
+  justify-content: center;
+}
+
+.backBtn {
+  font-family: 'Schoolbell', cursive;
+  font-size: 14px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  letter-spacing: 0.5px;
+}
+
+.backBtn:hover { color: var(--fg); }
 
 .nextBtn {
   font-family: 'Schoolbell', cursive;
   font-size: 18px;
   letter-spacing: 1px;
-  color: #050505;
-  background: #f7f7f4;
-  border: 3px solid #050505;
+  color: var(--fg);
+  background: var(--bg);
+  border: 3px solid var(--fg);
   padding: 10px 36px;
   border-radius: 2px;
   cursor: pointer;
-  box-shadow: 5px 5px 0 #050505;
+  box-shadow: 5px 5px 0 var(--fg);
   transform: translate(-2px, -2px);
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.nextBtn:hover {
-  transform: translate(0, 0);
-  box-shadow: 3px 3px 0 #050505;
-}
-
-.nextBtn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 #050505;
-}
+.nextBtn:hover { transform: translate(0, 0); box-shadow: 3px 3px 0 var(--fg); }
+.nextBtn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--fg); }
 
 .strikeLine {
-  stroke: #e03030;
+  stroke: var(--strike);
   stroke-width: 11;
   stroke-linecap: round;
 }
+
+/* ── Responsive ── */
+.cardsRow { display: contents; }
+
+@media (max-width: 560px) {
+  .gameScreen { gap: 10px; padding: 16px 12px; box-sizing: border-box; }
+  .gameTitle { font-size: 28px; letter-spacing: 2px; }
+  .turnSub { font-size: 18px; }
+
+  .gameArea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    justify-items: center;
+  }
+
+  .gameArea > .cardSlot:first-child { grid-column: 1; grid-row: 1; }
+  .gameArea > .board                { grid-column: 1 / -1; grid-row: 2; }
+  .gameArea > .cardSlot:last-child  { grid-column: 2; grid-row: 1; }
+
+  .cardSlot { width: 90px; }
+  .board { width: min(320px, 92vw); height: min(320px, 92vw); }
+
+  .playerCard { width: 90px; padding: 6px 6px 8px; gap: 3px; }
+  .playerAvatar { width: 52px; height: 52px; }
+  .playerName { font-size: 10px; }
+  .playerSymbol { font-size: 10px; }
+
+  .modeBtn { font-size: 15px; padding: 10px 24px; }
+  .nextBtn { font-size: 15px; padding: 8px 20px; }
+
+  .friendInput { width: min(220px, 80vw); }
+  .formDivider { width: min(220px, 80vw); }
+  .roomCode { font-size: 26px; letter-spacing: 5px; padding: 6px 14px; }
+}
+
