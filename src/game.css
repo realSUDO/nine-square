@@ -17,38 +17,38 @@ body {
 }
 
 .gameTitle {
-  font-family: 'Schoolbell', cursive;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: 2px;
+  font-size: 42px;
+  letter-spacing: 3px;
   color: #050505;
-  margin: 0 0 12px;
+  margin: 0 0 16px;
 }
 
 .modeBtn {
   font-family: 'Schoolbell', cursive;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 18px;
   letter-spacing: 1px;
   color: #050505;
-  background: transparent;
+  background: #f7f7f4;
   border: 3px solid #050505;
-  padding: 12px 36px;
+  padding: 12px 40px;
   cursor: pointer;
   border-radius: 2px;
-  /* rough hand-drawn feel */
-  box-shadow: 3px 3px 0 #050505;
+  /* popped out at idle */
+  box-shadow: 5px 5px 0 #050505;
+  transform: translate(-2px, -2px);
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .modeBtn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #050505;
+  /* more pressed on hover */
+  transform: translate(0px, 0px);
+  box-shadow: 3px 3px 0 #050505;
 }
 
 .modeBtn:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 #050505;
+  /* fully pressed on click */
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0 #050505;
 }
 
 /* ── Game Screen ── */
@@ -58,37 +58,26 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 /* ── Turn Indicator ── */
 .turnIndicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.turnSymbol {
-  font-family: 'Schoolbell', cursive;
-  font-size: 36px;
-  font-weight: 900;
-  color: #050505;
-  line-height: 1;
+  text-align: center;
+  min-height: 36px;
 }
 
 .turnSub {
-  font-family: 'Schoolbell', cursive;
-  font-size: 15px;
-  font-weight: 500;
-  color: #444;
+  font-size: 22px;
+  color: #050505;
+  letter-spacing: 0.5px;
 }
 
 /* ── Game Area ── */
 .gameArea {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 
 /* ── Player Card ── */
@@ -96,45 +85,45 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  width: 90px;
-  padding: 12px 8px;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  transition: transform 0.15s, border-color 0.15s;
+  gap: 6px;
+  width: 100px;
+  padding: 10px 8px 12px;
+  border: 2.5px dashed transparent;
+  border-radius: 6px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .playerCard.active {
   border-color: #050505;
-  transform: rotate(-1deg) scale(1.04);
-  box-shadow: 2px 2px 0 #050505;
+  transform: rotate(-1deg) scale(1.05);
+  box-shadow: 3px 3px 0 #050505;
+  background: #fff;
 }
 
 .playerAvatar {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
 .playerSymbol {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
   color: #050505;
 }
 
 .playerName {
-  font-family: 'Schoolbell', cursive;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 13px;
   color: #050505;
   text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 /* ── Board ── */
 .board {
-  width: 360px;
-  height: 360px;
+  width: 340px;
+  height: 340px;
+  filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.08));
 }
 
 .gridLine {
@@ -158,7 +147,7 @@ body {
 
 .strikeLine {
   stroke: #e03030;
-  stroke-width: 6;
+  stroke-width: 9;
   stroke-linecap: round;
   filter: url(#roughen);
 }

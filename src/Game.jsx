@@ -1,19 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import "./game.css";
 import Board from "./components/Board.jsx";
 import { checkWinner } from "./utils/winner.js";
+import confetti from "canvas-confetti";
 
 export default function App() {
   const [mode, setMode] = useState(null);
   const [cells, setCells] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState("X");
+  const firedRef = useRef(null);
+  const p1Ref = useRef(null);
+  const p2Ref = useRef(null);
+
+  const result = checkWinner(cells);
+  const winLine = result?.line ?? null;
+  const winner = result?.winner ?? null;
+
+  useEffect(() => {
+    if (winner && firedRef.current !== winner) {
+      firedRef.current = winner;
+      const cardEl = winner === "X" ? p1Ref.current : p2Ref.current;
+      const rect = cardEl?.getBoundingClientRect();
+      const x = rect ? (rect.left + rect.width / 2) / window.innerWidth : (winner === "X" ? 0.15 : 0.85);
+      const y = rect ? (rect.top + rect.height / 2) / window.innerHeight : 0.55;
+      confetti({
+        particleCount: 40,
+        spread: 50,
+        startVelocity: 20,
+        gravity: 1,
+        ticks: 100,
+        scalar: 0.8,
+        colors: ["#050505", "#222222", "#ffff00", "#ffffff"],
+        origin: { x, y },
+      });
+    }
+  }, [winner]);
 
   if (!mode) {
     return <ModeSelect onSelect={setMode} />;
   }
-
-  const result = checkWinner(cells);
-  const winLine = result?.line ?? null;
 
   function handleCellClick(index) {
     if (cells[index] || winLine) return;
@@ -31,9 +56,9 @@ export default function App() {
       <TurnIndicator turn={turn} winner={result?.winner} p1Name={p1Name} p2Name={p2Name} />
 
       <div className="gameArea">
-        <PlayerCard name={p1Name} symbol="X" active={!winLine && turn === "X"} flip={true} />
+        <PlayerCard ref={p1Ref} name={p1Name} symbol="X" active={!winLine && turn === "X"} flip={true} />
         <Board cells={cells} onCellClick={handleCellClick} winLine={winLine} />
-        <PlayerCard name={p2Name} symbol="O" active={!winLine && turn === "O"} flip={false} />
+        <PlayerCard ref={p2Ref} name={p2Name} symbol="O" active={!winLine && turn === "O"} flip={false} />
       </div>
     </div>
   );
@@ -58,7 +83,6 @@ function TurnIndicator({ turn, winner, p1Name, p2Name }) {
       </div>
     );
   }
-
   const name = turn === "X" ? p1Name : p2Name;
   return (
     <div className="turnIndicator">
@@ -67,9 +91,9 @@ function TurnIndicator({ turn, winner, p1Name, p2Name }) {
   );
 }
 
-function PlayerCard({ name, symbol, active, flip }) {
+const PlayerCard = forwardRef(function PlayerCard({ name, symbol, active, flip }, ref) {
   return (
-    <div className={`playerCard${active ? " active" : ""}`}>
+    <div ref={ref} className={`playerCard${active ? " active" : ""}`}>
       <img
         src="/user-base.png"
         alt={name}
@@ -79,4 +103,4 @@ function PlayerCard({ name, symbol, active, flip }) {
       <div className="playerName"><span className="playerSymbol">{symbol}</span> : {name}</div>
     </div>
   );
-}
+});

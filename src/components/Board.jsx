@@ -52,6 +52,7 @@ export default function Board({ cells, onCellClick, winLine }) {
           x1={strikeStart[0]} y1={strikeStart[1]}
           x2={strikeEnd[0]}   y2={strikeEnd[1]}
           className="strikeLine"
+          vectorEffect="non-scaling-stroke"
         />
       )}
     </svg>
