@@ -97,20 +97,23 @@ export default function FriendsFlow({ socket, onJoined, onBack }) {
     <div className="onlineForm">
       <h1 className="gameTitle">ONLINE</h1>
 
-      <label className="fieldLabel">Your name</label>
-      <input className="friendInput" placeholder="Enter name"
-        value={name} maxLength={16} onChange={e => { setName(e.target.value); setError(""); }} />
+      <div className="onlineFormInner">
+        <label className="fieldLabel">Your name</label>
+        <input className="friendInput" placeholder="Enter name"
+          value={name} maxLength={16} onChange={e => { setName(e.target.value); setError(""); }} />
 
-      <div className="formDivider"><span>create a room</span></div>
-      <button className="modeBtn" onClick={handleCreate}>Create Room</button>
+        <div className="formDivider"><span>create a room</span></div>
+        <button className="modeBtn" onClick={handleCreate}>Create Room</button>
 
-      <div className="formDivider"><span>or join with a code</span></div>
-      <input className="friendInput" placeholder="Room code" value={code} maxLength={5}
-        style={{ textAlign: "center", letterSpacing: 6 }}
-        onChange={e => { setCode(e.target.value.toUpperCase()); setError(""); }} />
-      <button className="modeBtn" onClick={handleJoin}>Join Room</button>
+        <div className="formDivider"><span>or join with a code</span></div>
+        <input className="friendInput" placeholder="Room code" value={code} maxLength={5}
+          style={{ textAlign: "center", letterSpacing: 6 }}
+          onChange={e => { setCode(e.target.value.toUpperCase()); setError(""); }} />
+        <button className="modeBtn" onClick={handleJoin}>Join Room</button>
 
-      {error && <p className="fieldError">{error}</p>}
+        {error && <p className="fieldError">{error}</p>}
+      </div>
+
       <button className="backBtn" onClick={onBack}>← Back</button>
     </div>
   );

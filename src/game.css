@@ -66,24 +66,24 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 28px;
 }
 
 .gameTitle {
-  font-size: 42px;
-  letter-spacing: 3px;
+  font-size: clamp(42px, 5vw, 80px);
+  letter-spacing: 4px;
   color: var(--fg);
-  margin: 0 0 16px;
+  margin: 0 0 24px;
 }
 
 .modeBtn {
   font-family: 'Schoolbell', cursive;
-  font-size: 18px;
+  font-size: clamp(18px, 1.8vw, 28px);
   letter-spacing: 1px;
   color: var(--fg);
   background: var(--bg);
   border: 3px solid var(--fg);
-  padding: 12px 40px;
+  padding: clamp(12px, 1.2vw, 20px) clamp(40px, 4vw, 72px);
   cursor: pointer;
   border-radius: 2px;
   box-shadow: 5px 5px 0 var(--fg);
@@ -114,11 +114,11 @@ body {
 /* ── Turn Indicator ── */
 .turnIndicator {
   text-align: center;
-  min-height: 40px;
+  min-height: 48px;
 }
 
 .turnSub {
-  font-size: 26px;
+  font-size: clamp(22px, 2.2vw, 36px);
   color: var(--fg);
   letter-spacing: 1px;
 }
@@ -127,7 +127,7 @@ body {
 .gameArea {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
 }
 
 /* ── Player Card ── */
@@ -135,9 +135,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  width: 100px;
-  padding: 12px 8px 14px;
+  gap: 8px;
+  width: clamp(100px, 10vw, 160px);
+  padding: 16px 10px 18px;
   border-radius: 6px;
   background: var(--card-bg);
   border: 2px solid transparent;
@@ -153,19 +153,19 @@ body {
 }
 
 .playerAvatar {
-  width: 80px;
-  height: 80px;
+  width: clamp(80px, 8vw, 120px);
+  height: clamp(80px, 8vw, 120px);
   object-fit: contain;
 }
 
 .playerSymbol {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 900;
   color: var(--fg);
 }
 
 .playerName {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--fg);
   text-align: center;
   letter-spacing: 0.3px;
@@ -173,8 +173,8 @@ body {
 
 /* ── Board ── */
 .board {
-  width: min(340px, 100%);
-  height: min(340px, 100vw);
+  width: clamp(340px, 38vw, 560px);
+  height: clamp(340px, 38vw, 560px);
   filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.08));
   flex-shrink: 0;
 }
@@ -198,7 +198,7 @@ body {
 
 /* ── Card slot ── */
 .cardSlot {
-  width: 100px;
+  width: clamp(100px, 10vw, 160px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,11 +208,11 @@ body {
 /* ── Friends Input ── */
 .friendInput {
   font-family: 'Schoolbell', cursive;
-  font-size: 18px;
+  font-size: clamp(16px, 1.4vw, 22px);
   color: var(--fg);
   background: var(--bg);
   border: 3px solid var(--fg);
-  padding: 10px 16px;
+  padding: clamp(10px, 1vw, 16px) clamp(14px, 1.4vw, 22px);
   border-radius: 2px;
   outline: none;
   box-shadow: 3px 3px 0 var(--input-shadow);
@@ -226,7 +226,7 @@ body {
 
 .roomCode {
   font-family: 'Schoolbell', cursive;
-  font-size: 38px;
+  font-size: clamp(32px, 3.5vw, 56px);
   letter-spacing: 8px;
   color: var(--fg);
   margin: 0;
@@ -242,15 +242,36 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
+}
+
+.onlineFormInner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: clamp(260px, 28vw, 420px);
+}
+
+.onlineFormInner .modeBtn {
+  width: 100%;
+  padding: 12px 0;
+  box-sizing: border-box;
+}
+
+.onlineFormInner .friendInput {
+  width: 100%;
+}
+
+.onlineFormInner .formDivider {
+  width: 100%;
 }
 
 .fieldLabel {
-  font-size: 13px;
+  font-size: clamp(13px, 1.1vw, 18px);
   color: var(--muted);
   letter-spacing: 1px;
   align-self: flex-start;
-  margin-left: calc(50% - 110px);
 }
 
 .formDivider {
@@ -259,7 +280,7 @@ body {
   width: 220px;
   gap: 8px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: clamp(13px, 1.1vw, 18px);
   margin: 2px 0;
 }
 
@@ -294,7 +315,7 @@ body {
 
 .shareLinkBtn {
   font-family: 'Schoolbell', cursive;
-  font-size: 15px;
+  font-size: clamp(15px, 1.3vw, 20px);
   color: var(--muted);
   background: none;
   border: 2px dashed var(--divider);
@@ -323,7 +344,7 @@ body {
 }
 
 .waitLabel {
-  font-size: 13px;
+  font-size: clamp(13px, 1.1vw, 18px);
   color: var(--muted);
   letter-spacing: 2px;
   margin: 0;
@@ -343,7 +364,7 @@ body {
 }
 
 .waitingText {
-  font-size: 15px;
+  font-size: clamp(15px, 1.3vw, 20px);
   color: var(--muted);
   margin: 0;
 }
@@ -360,7 +381,7 @@ body {
 
 .backBtn {
   font-family: 'Schoolbell', cursive;
-  font-size: 14px;
+  font-size: clamp(14px, 1.2vw, 20px);
   color: var(--muted);
   background: none;
   border: none;
