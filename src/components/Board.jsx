@@ -8,6 +8,11 @@ export default function Board({ cells, onCellClick, winLine }) {
   const strikeStart = winLine ? cellCenters[winLine[0]] : null;
   const strikeEnd   = winLine ? cellCenters[winLine[2]] : null;
 
+  // compute line length for dash animation
+  const strikeLen = strikeStart
+    ? Math.hypot(strikeEnd[0] - strikeStart[0], strikeEnd[1] - strikeStart[1])
+    : 0;
+
   return (
     <svg width="360" height="360" viewBox="0 0 360 360" className="board">
       <defs>
@@ -15,6 +20,18 @@ export default function Board({ cells, onCellClick, winLine }) {
           <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" result="noise" />
           <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" />
         </filter>
+        {strikeStart && (
+          <style>{`
+            .strikeLine {
+              stroke-dasharray: ${strikeLen};
+              stroke-dashoffset: ${strikeLen};
+              animation: strikeIn 0.35s ease-out forwards;
+            }
+            @keyframes strikeIn {
+              to { stroke-dashoffset: 0; }
+            }
+          `}</style>
+        )}
       </defs>
 
       {cells.map((_, index) => {
@@ -52,7 +69,6 @@ export default function Board({ cells, onCellClick, winLine }) {
           x1={strikeStart[0]} y1={strikeStart[1]}
           x2={strikeEnd[0]}   y2={strikeEnd[1]}
           className="strikeLine"
-          vectorEffect="non-scaling-stroke"
         />
       )}
     </svg>

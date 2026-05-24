@@ -145,9 +145,33 @@ body {
   cursor: pointer;
 }
 
+.nextBtn {
+  font-family: 'Schoolbell', cursive;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #050505;
+  background: #f7f7f4;
+  border: 3px solid #050505;
+  padding: 10px 36px;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 #050505;
+  transform: translate(-2px, -2px);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.nextBtn:hover {
+  transform: translate(0, 0);
+  box-shadow: 3px 3px 0 #050505;
+}
+
+.nextBtn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 #050505;
+}
+
 .strikeLine {
   stroke: #e03030;
-  stroke-width: 9;
+  stroke-width: 11;
   stroke-linecap: round;
-  filter: url(#roughen);
 }

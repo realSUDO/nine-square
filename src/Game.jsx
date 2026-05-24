@@ -15,6 +15,14 @@ export default function App() {
   const result = checkWinner(cells);
   const winLine = result?.line ?? null;
   const winner = result?.winner ?? null;
+  const isTie = !winner && cells.every(Boolean);
+  const isOver = !!winner || isTie;
+
+  function resetRound() {
+    setCells(Array(9).fill(null));
+    setTurn("X");
+    firedRef.current = null;
+  }
 
   useEffect(() => {
     if (winner && firedRef.current !== winner) {
@@ -53,13 +61,19 @@ export default function App() {
 
   return (
     <div className="gameScreen">
-      <TurnIndicator turn={turn} winner={result?.winner} p1Name={p1Name} p2Name={p2Name} />
+      <TurnIndicator turn={turn} winner={winner} isTie={isTie} p1Name={p1Name} p2Name={p2Name} />
 
       <div className="gameArea">
-        <PlayerCard ref={p1Ref} name={p1Name} symbol="X" active={!winLine && turn === "X"} flip={true} />
+        <PlayerCard ref={p1Ref} name={p1Name} symbol="X" active={!isOver && turn === "X"} flip={true} />
         <Board cells={cells} onCellClick={handleCellClick} winLine={winLine} />
-        <PlayerCard ref={p2Ref} name={p2Name} symbol="O" active={!winLine && turn === "O"} flip={false} />
+        <PlayerCard ref={p2Ref} name={p2Name} symbol="O" active={!isOver && turn === "O"} flip={false} />
       </div>
+
+      <button
+        className="nextBtn"
+        style={{ visibility: isOver ? "visible" : "hidden" }}
+        onClick={resetRound}
+      >Next Round</button>
     </div>
   );
 }
@@ -74,21 +88,14 @@ function ModeSelect({ onSelect }) {
   );
 }
 
-function TurnIndicator({ turn, winner, p1Name, p2Name }) {
+function TurnIndicator({ turn, winner, isTie, p1Name, p2Name }) {
+  if (isTie) return <div className="turnIndicator"><span className="turnSub">It's a tie!</span></div>;
   if (winner) {
     const name = winner === "X" ? p1Name : p2Name;
-    return (
-      <div className="turnIndicator">
-        <span className="turnSub">{name} wins!</span>
-      </div>
-    );
+    return <div className="turnIndicator"><span className="turnSub">{name} wins!</span></div>;
   }
   const name = turn === "X" ? p1Name : p2Name;
-  return (
-    <div className="turnIndicator">
-      <span className="turnSub">{name}'s move</span>
-    </div>
-  );
+  return <div className="turnIndicator"><span className="turnSub">{name}'s move</span></div>;
 }
 
 const PlayerCard = forwardRef(function PlayerCard({ name, symbol, active, flip }, ref) {
